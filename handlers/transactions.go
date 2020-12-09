@@ -42,7 +42,7 @@ func GetTransactionsByUser() echo.HandlerFunc {
 // @Param entity body string false "bank"
 // @Success 200 {object} db.Transaction
 // @Failure 400 {object} int
-// @Router /transactions/{transID} [get]
+// @Router /transactions/{transID} [post]
 func PostTransaction() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		transReq := db.TransactionRequest{}

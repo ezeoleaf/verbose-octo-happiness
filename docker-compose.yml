@@ -1,0 +1,13 @@
+version: '3'
+services:
+  bankapp:
+    build:
+        context: '.'
+    container_name: bankapp
+    ports:
+      - 1323:1323
+    volumes:
+        - "bankappdata:/data/bankappdata"
+
+volumes:
+    bankappdata:
