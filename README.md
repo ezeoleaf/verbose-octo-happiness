@@ -93,4 +93,4 @@ For running the web application you can:
 
 ### Using NPM
 
-`cd webapp && npm start`
+`cd webapp && npm install && npm start`
