@@ -1,4 +1,115 @@
+definitions:
+  db.Account:
+    properties:
+      balance:
+        type: number
+      history:
+        items:
+          $ref: '#/definitions/db.Transaction'
+        type: array
+      id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  db.Transaction:
+    properties:
+      amount:
+        type: number
+      date:
+        type: string
+      description:
+        type: string
+      entity:
+        type: string
+      id:
+        type: integer
+      type:
+        type: string
+    type: object
+  db.TransactionList:
+    properties:
+      transactions:
+        items:
+          $ref: '#/definitions/db.Transaction'
+        type: array
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /account/{userID}:
+    get:
+      consumes:
+      - application/json
+      description: Returns an account from an user ID
+      parameters:
+      - description: user ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/db.Account'
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+      summary: Returns account for a user
+      tags:
+      - transactions
+  /transactions/{transID}:
+    get:
+      consumes:
+      - application/json
+      description: Returns a transaction information from an ID
+      parameters:
+      - description: transaction id
+        in: path
+        name: transID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/db.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+      summary: Returns a transaction
+      tags:
+      - transactions
+  /transactions/{userID}:
+    get:
+      consumes:
+      - application/json
+      description: Returns list of transactions for an user ID
+      parameters:
+      - description: user ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/db.TransactionList'
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+      summary: Returns list of Transactions
+      tags:
+      - transactions
 swagger: "2.0"

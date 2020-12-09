@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/ezeoleaf/bankapp/db"
 	"github.com/ezeoleaf/bankapp/handlers"
 	_ "github.com/joho/godotenv/autoload"
 
@@ -41,7 +42,7 @@ func startAPI() {
 	e.Use(middleware.CORS())
 
 	e.HTTPErrorHandler = func(err error, c echo.Context) {
-		// Take required information from error and context and send it to a service like New Relic
+		// Take required information from error and context and send it to a service
 		fmt.Println(c.Path(), c.QueryParams(), err.Error())
 		// Call the default handler to return the HTTP response
 		e.DefaultHTTPErrorHandler(err, c)
@@ -57,5 +58,16 @@ func initRoutes(e *echo.Echo) {
 		return c.String(http.StatusOK, "BANK API")
 	})
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
-	e.GET("/transactions/:userID", handlers.GetTransactions())
+	e.GET("/transactions/:userID", handlers.GetTransactionsByUser())
+	e.GET("/transaction/:transID", handlers.GetTransaction())
+	e.GET("/account/:userID", handlers.GetAccount())
+	e.POST("/debit", handlers.PostTransaction())
+	e.POST("/credit", handlers.PostTransaction())
+
+	go populateData()
+}
+
+func populateData() { //Method for create fake account
+	db.CreateAccount()
+	db.CreateTransactions()
 }
