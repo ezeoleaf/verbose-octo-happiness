@@ -87,6 +87,53 @@ paths:
       summary: Returns a transaction
       tags:
       - transactions
+    post:
+      consumes:
+      - application/json
+      description: Creates and attach a transaction to a user account and calculate
+        the balance
+      parameters:
+      - description: user id
+        in: body
+        name: user_id
+        required: true
+        schema:
+          type: integer
+      - description: debit
+        in: body
+        name: type
+        required: true
+        schema:
+          type: string
+      - description: description
+        in: body
+        name: description
+        schema:
+          type: string
+      - description: amount
+        in: body
+        name: amount
+        schema:
+          type: number
+      - description: bank
+        in: body
+        name: entity
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/db.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+      summary: Register a transaction
+      tags:
+      - transactions
   /transactions/{userID}:
     get:
       consumes:

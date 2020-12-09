@@ -20,7 +20,7 @@ func GetTransactionByID(transID int64) Transaction {
 		return Transactions[transID]
 	}
 
-	return Transaction{} //TODO: Return error
+	return Transaction{}
 }
 
 func SaveTransactionRequest(r TransactionRequest) TransactionResponse {
@@ -72,4 +72,6 @@ func createTransaction(r TransactionRequest) Transaction {
 
 func CreateTransactions() {
 	Transactions = make(map[int64]Transaction)
+	t := Transaction{ID: 1, Type: "credit", Description: "Initial bank account", Amount: 5000, Date: time.Now(), Entity: "Olaf"}
+	Transactions[1] = t
 }

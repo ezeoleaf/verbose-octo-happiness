@@ -35,6 +35,10 @@ compile:
 	# Windows
 	GOOS=windows GOARCH=amd64 go build -o bin/main-windows-amd64 .
 
+## run-web-app: starts the web application
+run-web-app:
+	cd webapp && npm install && npm start
+
 ## help: prints this help message
 help:
 	@echo "Usage: \n"
